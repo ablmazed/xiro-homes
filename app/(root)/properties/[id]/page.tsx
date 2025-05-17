@@ -1,7 +1,7 @@
 import { getPropertyById } from '@/lib/actions/property.actions'
 import Image from 'next/image'
 
-interface Props {
+type Props {
   params: { id: string }
 }
 
