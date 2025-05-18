@@ -1,11 +1,9 @@
-import { Button } from '@/components/ui/button'
+import HeroBanner from '@/components/shared/home/HeroBanner'
 
 export default function Home() {
   return (
     <div>
-      <Button variant="default" className="bg-yellow-500">
-        Clicks mes from this button
-      </Button>
+      <HeroBanner />
     </div>
   )
 }
