@@ -1,8 +1,11 @@
 import { Button } from '@/components/ui/button'
-export default function page() {
+
+export default function Home() {
   return (
     <div>
-      <Button>Button</Button>
+      <Button variant="default" className="bg-yellow-500">
+        Clicks me
+      </Button>
     </div>
   )
 }
