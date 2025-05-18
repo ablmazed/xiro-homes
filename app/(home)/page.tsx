@@ -1,10 +1,11 @@
+'use client'
 import { Button } from '@/components/ui/button'
 
 export default function Home() {
   return (
     <div>
       <Button variant="default" className="bg-yellow-500">
-        Click me
+        Clicks me
       </Button>
     </div>
   )
