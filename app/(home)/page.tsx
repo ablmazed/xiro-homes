@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       <Button variant="default" className="bg-yellow-500">
-        Clicks mes
+        Clicks mes from this button
       </Button>
     </div>
   )
