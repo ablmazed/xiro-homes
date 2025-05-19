@@ -1,6 +1,6 @@
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { connectDB } from '@/lib/mongodb'
+import { connectToDatabase } from '@/lib/mongodb'
 import bcrypt from 'bcryptjs'
 import User from '@/lib/models/User'
 
@@ -21,7 +21,7 @@ export default NextAuth({
           throw new Error('Email and Password are required')
         }
 
-        await connectDB()
+        await connectToDatabase()
 
         const user = await User.findOne({ email: credentials.email })
         if (!user) {
