@@ -1,5 +1,5 @@
 import { connectToDatabase } from '@/lib/mongodb'
-import User from '@/lib/models/User'
+import User from '@/lib/models/User.model'
 import bcrypt from 'bcryptjs'
 import { NextResponse } from 'next/server'
 

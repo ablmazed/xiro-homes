@@ -2,6 +2,8 @@ import Link from 'next/link'
 import Menu from './menu'
 import { app_name } from '@/lib/constants'
 import { MoonIcon } from 'lucide-react'
+import UserButton from './user-button'
+
 export default function Header() {
   return (
     <header>
@@ -16,6 +18,7 @@ export default function Header() {
           <div>
             <button>
               <MoonIcon />
+              <UserButton />
             </button>
           </div>
         </div>
