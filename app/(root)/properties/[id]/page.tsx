@@ -5,6 +5,24 @@ type Props = {
   params: { id: string }
 }
 
+export async function generateStaticParams({
+  params,
+}: {
+  params: { id: string }
+}) {
+  const properties = await getPropertyById(params.id)
+  return {
+    id: properties._id,
+  }
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const property = await getPropertyById(params.id)
+  return {
+    title: property.title,
+  }
+}
+
 export default async function PropertyDetails({ params }: Props) {
   const { id } = params
   const property = await getPropertyById(id)
