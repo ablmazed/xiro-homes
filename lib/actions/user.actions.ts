@@ -37,3 +37,9 @@ export const SignOut = async () => {
   const redirectTo = await signOut({ redirect: false })
   redirect(redirectTo.redirect)
 }
+
+//SIGNIN-WITH-GOOGLE
+
+export const SignInWithGoogle = async () => {
+  await signIn('google')
+}
