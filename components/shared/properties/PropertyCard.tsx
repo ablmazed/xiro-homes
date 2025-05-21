@@ -1,60 +1,36 @@
 import { Card, CardContent } from '@/components/ui/card'
+import { IProperty } from '@/lib/models/property.models'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function PropertyCard() {
+export default function PropertyCard({
+  properties,
+}: {
+  properties: IProperty[]
+}) {
+  console.log('data from property card ', properties)
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 py-10 px-20 gap-3">
-      <Card className=" border-solid border-gray-100 shadow-2xl border-2  ">
-        <CardContent>
-          <Link href="/properties/">
-            <Image
-              src="/assets/images/prop4.webp"
-              alt="prop4 image"
-              width={400}
-              height={300}
-            />
-          </Link>
+      {properties.map((item) => (
+        <Link href={`/properties/${item._id}`} key={item.title}>
+          <Card className=" border-solid border-gray-100 shadow-2xl border-2  ">
+            <CardContent>
+              <Image
+                src={item.imageUrl}
+                alt={item.title}
+                width={400}
+                height={300}
+              />
 
-          <p>$2.3</p>
-          <p>3 bed, 1 bath</p>
-          <Link href="/properties?">
-            <h6>karachi</h6>
-          </Link>
-        </CardContent>
-      </Card>
-      <Card className=" border-solid border-gray-100 shadow-2xl border-2  ">
-        <CardContent>
-          <Link href="/">
-            <Image
-              src="/assets/images/prop5.webp"
-              alt="prop4 image"
-              width={400}
-              height={300}
-            />
-          </Link>
+              <p>{item.price}</p>
+              <p>{`${item.bedrooms}, ${item.bathrooms}, ${item.sqft}`}</p>
 
-          <p>$2.3</p>
-          <p>3 bed, 1 bath</p>
-          <h6>karachi</h6>
-        </CardContent>
-      </Card>
-      <Card className=" border-solid border-gray-100 shadow-2xl border-2  ">
-        <CardContent>
-          <Link href="/">
-            <Image
-              src="/assets/images/prop6.webp"
-              alt="prop4 image"
-              width={400}
-              height={300}
-            />
-          </Link>
-
-          <p>$2.3</p>
-          <p>3 bed, 1 bath</p>
-          <h6>karachi</h6>
-        </CardContent>
-      </Card>
+              <h6>{item.location}</h6>
+            </CardContent>
+          </Card>
+        </Link>
+      ))}
     </div>
   )
 }
