@@ -1,8 +1,8 @@
 import { getPropertyById } from '@/lib/actions/property.actions'
 import Image from 'next/image'
 
-interface Props {
-  params: { id: string }
+type Props = {
+  params: Awaited<{ id: string }>
 }
 
 export default async function PropertyDetails({ params }: Props) {
