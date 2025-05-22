@@ -1,13 +1,11 @@
 import { getPropertyById } from '@/lib/actions/property.actions'
 import Image from 'next/image'
 
-type PageProps = {
-  params: {
-    id: string
-  }
-}
-
-export default async function PropertyDetails({ params }: PageProps) {
+export default async function PropertyDetails({
+  params,
+}: {
+  params: { id: string }
+}) {
   const property = await getPropertyById(params.id)
 
   return (
