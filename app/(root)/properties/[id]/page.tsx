@@ -3,9 +3,9 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 // Remove the custom PageProps interface and use the correct Next.js typing pattern
-export default async function PropertyDetails(params: { id: string }) {
+export default async function PropertyDetails(id: string) {
   try {
-    const property = await getPropertyById(params.id)
+    const property = await getPropertyById(id)
 
     if (!property) {
       notFound()
