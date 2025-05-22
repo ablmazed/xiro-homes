@@ -19,3 +19,14 @@ export async function getPropertyById(id: string) {
   const property = await Property.findById(id)
   return JSON.parse(JSON.stringify(property)) as IProperty
 }
+
+// GET  property
+export async function getProperty() {
+  await connectToDatabase()
+
+  const properties = await Property.find()
+
+  return {
+    property: JSON.parse(JSON.stringify(properties)) as IProperty,
+  }
+}
