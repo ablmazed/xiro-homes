@@ -1,31 +1,14 @@
 import { getPropertyById } from '@/lib/actions/property.actions'
 import Image from 'next/image'
 
-type Props = {
-  params: { id: string }
-}
-
-export async function generateStaticParams({
-  params,
-}: {
-  params: { id: string }
-}) {
-  const properties = await getPropertyById(params.id)
-  return {
-    id: properties._id,
+type PageProps = {
+  params: {
+    id: string
   }
 }
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export default async function PropertyDetails({ params }: PageProps) {
   const property = await getPropertyById(params.id)
-  return {
-    title: property.title,
-  }
-}
-
-export default async function PropertyDetails({ params }: Props) {
-  const { id } = params
-  const property = await getPropertyById(id)
 
   return (
     <div className="max-w-4xl mx-auto p-6">
