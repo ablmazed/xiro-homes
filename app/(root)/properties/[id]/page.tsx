@@ -1,18 +1,20 @@
 import { getPropertyById } from '@/lib/actions/property.actions'
 import Image from 'next/image'
 
-export default async function PropertyDetails({
-  params,
-}: {
-  params: { id: string }
-}) {
+interface PageProps {
+  params: {
+    id: string
+  }
+}
+
+export default async function PropertyDetails({ params }: PageProps) {
   const property = await getPropertyById(params.id)
 
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
       <Image
-        src={property.imageUrl}
+        src={property.imageUrl || '/placeholder.svg'}
         alt={property.title}
         width={800}
         height={400}
