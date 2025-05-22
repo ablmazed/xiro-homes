@@ -1,12 +1,15 @@
-import { getProperty } from '@/lib/actions/property.actions'
+import { getPropertyById } from '@/lib/actions/property.actions'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 // Remove the custom PageProps interface and use the correct Next.js typing pattern
-export default async function PropertyDetails() {
+export default async function PropertyDetails({
+  params,
+}: {
+  params: { id: string }
+}) {
   try {
-    const propertydata = await getProperty()
-    const property = propertydata.property
+    const property = await getPropertyById(params.id)
 
     if (!property) {
       notFound()
