@@ -1,3 +1,5 @@
+'use server'
+
 import { connectToDatabase } from '../mongodb'
 import Property, { IProperty } from '../models/property.models'
 
