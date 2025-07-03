@@ -1,23 +1,16 @@
-// import { getAllProperty } from '@/lib/actions/property.actions'
-// import Image from 'next/image'
+import { getPropertyById } from '@/lib/actions/property.actions'
+import Image from 'next/image'
 
-// interface PropertyPageProps {
-//   params: {
-//     id: string
-//   }
-// }
+type Props = {
+  params: Promise<{ id: string }>
+}
 
-export default async function PropertyDetails() {
-  // const properties = await getAllProperty()
-
-  // const property = properties.property
+export default async function PropertyDetails({ params }: Props) {
+  const { id } = await params
+  const property = await getPropertyById(id)
 
   return (
-    <div>
-      <div>
-        <h2>Property Details page</h2>
-      </div>
-      {/* <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4">{property.title}</h1>
       <Image
         src={property.imageUrl}
@@ -70,7 +63,6 @@ export default async function PropertyDetails() {
           <li key={i}>{item}</li>
         ))}
       </ul>
-    </div> */}
     </div>
   )
 }
