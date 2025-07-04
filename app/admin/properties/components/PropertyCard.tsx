@@ -8,7 +8,7 @@ import Link from 'next/link'
 import DeleteDialog from '@/components/shared/delete-dialog'
 import { deleteProperty, getAllProperty } from '@/lib/actions/property.actions'
 import React, { useEffect, useState, useTransition } from 'react'
-import { IProperty } from '@/lib/models/property.model'
+import { IProperty } from '@/lib/models/property.models'
 
 type PropertyListDataProps = {
   property: IProperty[]

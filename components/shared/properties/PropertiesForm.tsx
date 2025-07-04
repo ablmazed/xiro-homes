@@ -1,5 +1,4 @@
 'use client'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -19,7 +18,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
 
-import { IProperty } from '@/lib/models/property.model'
+import { IProperty } from '@/lib/models/property.models'
 import { UploadButton } from '@/lib/uploadthing'
 import {
   PropertyInputSchema,

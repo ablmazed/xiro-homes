@@ -2,14 +2,6 @@
 'use client'
 
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -18,10 +10,18 @@ import {
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { deleteProperty } from '@/lib/actions/property.actions'
-import { getUser } from '@/lib/actions/user.action'
+import { getUser } from '@/lib/actions/user.actions'
 
 import React, { useEffect, useState } from 'react'
 import { IUser } from '@/lib/models/User.model'
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  TableBody,
+} from '@/components/ui/table'
+
 // Define the User type
 
 type UserProps = {

@@ -1,12 +1,15 @@
 'use server'
-
 import { connectToDatabase } from '../mongodb'
 import Property, { IProperty } from '../models/property.models'
 import { IPropertyInput } from '@/types'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { formatError } from '../utils'
-import { PropertyInputSchema } from '../validation/validator'
+import {
+  PropertyInputSchema,
+  PropertyUpdateSchema,
+} from '../validation/validator'
+import { getSetting } from './setting.actions'
 
 // GET ALL property
 export async function getAllProperty() {
@@ -109,7 +112,7 @@ export async function getAllPropertyForAdmin({
     ...queryFilter,
   })
   return {
-    products: JSON.parse(JSON.stringify(properties)) as IProperty[],
+    properties: JSON.parse(JSON.stringify(properties)) as IProperty[],
     totalPages: Math.ceil(countProperties),
   }
 }
@@ -123,7 +126,7 @@ export async function createProperty(data: IPropertyInput) {
     revalidatePath('/admin/properties')
     return {
       success: true,
-      message: 'Product created successfully',
+      message: 'Property created successfully',
     }
   } catch (error) {
     return { success: false, message: formatError(error) }
@@ -141,7 +144,7 @@ export async function updateProperty(
     revalidatePath('/admin/properties')
     return {
       success: true,
-      message: 'Product updated successfully',
+      message: 'Property updated successfully',
     }
   } catch (error) {
     return { success: false, message: formatError(error) }
@@ -153,11 +156,11 @@ export async function deleteProperty(id: string) {
   try {
     await connectToDatabase()
     const res = await Property.findByIdAndDelete(id)
-    if (!res) throw new Error('Product not found')
-    revalidatePath('/admin/products')
+    if (!res) throw new Error('Property not found')
+    revalidatePath('/admin/Properties')
     return {
       success: true,
-      message: 'Product deleted successfully',
+      message: 'Property deleted successfully',
     }
   } catch (error) {
     return { success: false, message: formatError(error) }

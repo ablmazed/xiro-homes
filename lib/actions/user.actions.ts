@@ -4,10 +4,21 @@ import { IUserSignIn } from '@/types'
 import bcrypt from 'bcryptjs'
 import { IUserSignUp } from '@/types'
 import { UserSignUpSchema } from '../validation/validator'
-import User from '@/lib/models/User.model'
 import { formatError } from '../utils'
 import { connectToDatabase } from '../mongodb'
 import { redirect } from 'next/navigation'
+import User, { IUser } from '@/lib/models/User.model'
+
+// GET ONE PROPERTY BY ID
+
+export async function getUser() {
+  await connectToDatabase()
+  const users = await User.find()
+
+  return {
+    user: JSON.parse(JSON.stringify(users)) as IUser[],
+  }
+}
 
 // CREATE
 export async function registerUser(userSignUp: IUserSignUp) {

@@ -1,8 +1,8 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { IProperty } from '@/lib/models/property.model'
-import { IUser } from '@/lib/models/user.model'
+import { IProperty } from '@/lib/models/property.models'
+import { IUser } from '@/lib/models/User.model'
 
 // import { TrendingUp } from "lucide-react";
 import {

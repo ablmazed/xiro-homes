@@ -1,9 +1,9 @@
 import Overview from '@/components/shared/admin/Overview'
-import { getAllPropertyForAdmin } from '@/lib/actions/property.actions'
-import { getUser } from '@/lib/actions/user.action'
+import { getAllProperty } from '@/lib/actions/property.actions'
+import { getUser } from '@/lib/actions/user.actions'
 
 export default async function Dashboard() {
-  const { property } = await getAllPropertyForAdmin()
+  const { property } = await getAllProperty()
   const { user } = await getUser()
 
   console.log('This is property', property)
