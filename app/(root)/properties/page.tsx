@@ -8,7 +8,6 @@ export default async function PropertyPage() {
 
   return (
     <div className="p-6">
-      <h2>There are Property Card</h2>
       <PropertyCard properties={propertydata.property} />
     </div>
   )

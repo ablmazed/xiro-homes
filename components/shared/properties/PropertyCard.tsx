@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { IProperty } from '@/lib/models/property.models'
-// import Image from 'next/image'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function PropertyCard({
@@ -16,12 +16,12 @@ export default function PropertyCard({
         <Link href={`/properties/${item._id}`} key={item.title}>
           <Card className=" border-solid border-gray-100 shadow-2xl border-2  ">
             <CardContent>
-              {/* <Image
+              <Image
                 src={item.imageUrl}
                 alt={item.title}
                 width={400}
                 height={300}
-              /> */}
+              />
 
               <p>{item.price}</p>
               <p>{`${item.bedrooms}, ${item.bathrooms}, ${item.sqft}`}</p>
