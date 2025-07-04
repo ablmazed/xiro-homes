@@ -1,4 +1,5 @@
 'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -20,13 +21,11 @@ import { toast } from 'sonner'
 
 import { IProperty } from '@/lib/models/property.models'
 import { UploadButton } from '@/lib/uploadthing'
-import {
-  PropertyInputSchema,
-  PropertyUpdateSchema,
-} from '@/lib/validation/validator'
+
 import { Checkbox } from '@/components/ui/checkbox'
 import { IPropertyInput } from '@/types'
 import { createProperty, updateProperty } from '@/lib/actions/property.actions'
+import { PropertyInputSchema, PropertyUpdateSchema } from '@/lib/validator'
 
 const propertyDefaultValues: IPropertyInput =
   process.env.NODE_ENV === 'development'
