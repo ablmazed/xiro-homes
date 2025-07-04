@@ -32,7 +32,7 @@ export default function Header() {
       {/* Mobile Menu Dropdown */}
       {isOpen && (
         <nav className="md:hidden flex flex-col bg-white shadow-md header-button">
-          {data.headerMenus.map((item) => (
+          {data.headerMenu.map((item) => (
             <Link
               key={item.name}
               href={item.href}
