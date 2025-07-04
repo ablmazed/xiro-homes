@@ -16,7 +16,7 @@ export async function connectToDatabase() {
   if (!cached.promise) {
     cached.promise = mongoose
       .connect(MONGODB_URI, {
-        dbName: 'nextauth10',
+        dbName: 'xiro-homes-16',
         bufferCommands: false,
       })
       .then((m) => m.connection)
