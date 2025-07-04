@@ -12,7 +12,7 @@ export default function Header() {
       <div className="">
         {/* Desktop Menu */}
         <nav className="hidden md:flex">
-          {data.headerMenus.map((item) => (
+          {data.headerMenu.map((item) => (
             <Link
               key={item.name}
               href={item.href}
