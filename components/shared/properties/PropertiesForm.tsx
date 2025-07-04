@@ -26,7 +26,6 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { IPropertyInput } from '@/types'
 import { createProperty, updateProperty } from '@/lib/actions/property.actions'
 import { PropertyInputSchema, PropertyUpdateSchema } from '@/lib/validator'
-
 const propertyDefaultValues: IPropertyInput =
   process.env.NODE_ENV === 'development'
     ? {
