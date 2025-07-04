@@ -36,7 +36,7 @@ export default function Footer() {
         </div>
         <Separator className="bg-gray-300  " />
         <div className="flex justify-between flex-col py-8 min-[500px]:py-14 gap-8 min-[500px]:gap-16 lg:gap-0 lg:flex-row">
-          {data.footerMenus.map((fmenu, index) => (
+          {data.footerMenu.map((fmenu, index) => (
             <div key={index} className="block">
               <h2 className="text-lg font-medium mb-4 min-[500px]:mb-7 text-center min-[500px]:text-left">
                 {fmenu.title}
