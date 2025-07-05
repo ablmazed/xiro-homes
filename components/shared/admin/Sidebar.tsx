@@ -26,7 +26,7 @@ const menuList: MenuItem[] = [
   },
   {
     name: 'Add new property',
-    link: '/admin/Addproperties',
+    link: '/admin/addproperties',
     icon: <Layers2 className="h-5 w-5" />,
   },
   {
