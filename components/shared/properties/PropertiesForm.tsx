@@ -18,18 +18,20 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from 'sonner'
-
-import { IProperty } from '@/lib/models/property.models'
+import type { IProperty } from '@/lib/models/property.models'
 import { UploadButton } from '@/lib/uploadthing'
-
+import {
+  PropertyInputSchema,
+  PropertyUpdateSchema,
+} from '@/lib/validation/validator'
 import { Checkbox } from '@/components/ui/checkbox'
-import { IPropertyInput } from '@/types'
+import type { IPropertyInput } from '@/types'
 import { createProperty, updateProperty } from '@/lib/actions/property.actions'
-import { PropertyInputSchema, PropertyUpdateSchema } from '@/lib/validator'
+
 const propertyDefaultValues: IPropertyInput =
   process.env.NODE_ENV === 'development'
     ? {
-        title: ' this is title',
+        title: 'this is title',
         tags: ['mazed'],
         description: 'this is description',
         details: 'this is details',
@@ -47,7 +49,7 @@ const propertyDefaultValues: IPropertyInput =
         propertyType: 'this is type',
         isForSale: false,
         basement: 'this is basement',
-        floorCovering: ['thi is flor covering'],
+        floorCovering: ['this is floor covering'],
         coolingType: [],
         heatingType: [],
         heatingFuel: [],
@@ -106,41 +108,48 @@ const PropertiesForm = ({
 }) => {
   const router = useRouter()
 
-  const form = useForm<IPropertyInput>({
-    resolver:
-      type === 'Update'
-        ? zodResolver(PropertyUpdateSchema)
-        : zodResolver(PropertyInputSchema),
+  // Fix the type mismatch by using a more flexible approach
+  const form = useForm({
+    resolver: zodResolver(
+      type === 'Update' ? PropertyUpdateSchema : PropertyInputSchema
+    ),
     defaultValues:
       property && type === 'Update' ? property : propertyDefaultValues,
   })
 
-  async function onSubmit(values: IPropertyInput) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async function onSubmit(values: any) {
+    // Cast to IPropertyInput after validation
+    const propertyData = values as IPropertyInput
+
     if (type === 'Create') {
-      const res = await createProperty(values)
+      const res = await createProperty(propertyData)
       if (!res.success) {
-        toast.error('data create fail')
+        toast.error('Data create failed')
       } else {
-        toast.success('data create successfully')
+        toast.success('Data created successfully')
         router.push(`/admin/properties`)
       }
     }
+
     if (type === 'Update') {
       if (!propertyId) {
         router.push(`/admin/properties`)
         return
       }
-      const res = await updateProperty({ ...values, _id: propertyId })
+      const res = await updateProperty({ ...propertyData, _id: propertyId })
       if (!res.success) {
-        toast.error('update fail')
+        toast.error('Update failed')
       } else {
+        toast.success('Updated successfully')
         router.push(`/admin/properties`)
       }
     }
   }
-  const images = form.watch('imageUrl')
 
+  const images = form.watch('imageUrl')
   console.log(form.formState.errors)
+
   return (
     <Form {...form}>
       <form
@@ -156,36 +165,33 @@ const PropertiesForm = ({
               <FormItem className="w-full">
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter product title" {...field} />
+                  <Input placeholder="Enter property title" {...field} />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="description"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>description</FormLabel>
-
+                <FormLabel>Description</FormLabel>
                 <FormControl>
                   <div className="relative">
                     <Input
-                      placeholder="Enter property slug"
+                      placeholder="Enter property description"
                       className="pl-8"
                       {...field}
                     />
                   </div>
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <div className="flex flex-col gap-5 md:flex-row">
           <FormField
             control={form.control}
@@ -194,13 +200,17 @@ const PropertiesForm = ({
               <FormItem className="w-full">
                 <FormLabel>Price</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter Price" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="Enter Price"
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="bedrooms"
@@ -210,16 +220,17 @@ const PropertiesForm = ({
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="Enter product brand"
+                    placeholder="Enter number of bedrooms"
                     {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <div className="flex flex-col gap-5 md:flex-row">
           <FormField
             control={form.control}
@@ -228,7 +239,12 @@ const PropertiesForm = ({
               <FormItem className="w-full">
                 <FormLabel>SQFT</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter sqft" {...field} />
+                  <Input
+                    type="number"
+                    placeholder="Enter square footage"
+                    {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -239,9 +255,9 @@ const PropertiesForm = ({
             name="basement"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel> basement</FormLabel>
+                <FormLabel>Basement</FormLabel>
                 <FormControl>
-                  <Input placeholder="Enter basement" {...field} />
+                  <Input placeholder="Enter basement details" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -252,13 +268,43 @@ const PropertiesForm = ({
             name="bathrooms"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel> Bathrooms</FormLabel>
+                <FormLabel>Bathrooms</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
-                    placeholder="Enter product count in stock"
+                    placeholder="Enter number of bathrooms"
                     {...field}
+                    onChange={(e) => field.onChange(Number(e.target.value))}
                   />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="flex flex-col gap-5 md:flex-row">
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter property location" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="propertyType"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Property Type</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter property type" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -278,14 +324,13 @@ const PropertiesForm = ({
                     <div className="flex justify-start items-center space-x-2">
                       {images && (
                         <Image
-                          src={images}
-                          alt="product image"
+                          src={images || '/placeholder.svg'}
+                          alt="property image"
                           className="w-20 h-20 object-cover object-center rounded-sm"
                           width={100}
                           height={100}
                         />
                       )}
-
                       <FormControl>
                         <UploadButton
                           endpoint="imageUploader"
@@ -301,7 +346,6 @@ const PropertiesForm = ({
                     </div>
                   </CardContent>
                 </Card>
-
                 <FormMessage />
               </FormItem>
             )}
@@ -317,37 +361,40 @@ const PropertiesForm = ({
                 <FormLabel>Details</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Tell us a little bit about yourself"
+                    placeholder="Enter detailed property information"
                     className="resize-none"
                     {...field}
                   />
                 </FormControl>
                 <FormDescription>
-                  You can <span>@mention</span> other users and organizations to
-                  link to them.
+                  Provide comprehensive details about the property.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
+
         <div>
           <FormField
             control={form.control}
             name="isForSale"
             render={({ field }) => (
-              <FormItem className="space-x-2 items-center">
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0">
                 <FormControl>
                   <Checkbox
                     checked={field.value}
                     onCheckedChange={field.onChange}
                   />
                 </FormControl>
-                <FormLabel> isForSale?</FormLabel>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Is For Sale?</FormLabel>
+                </div>
               </FormItem>
             )}
           />
         </div>
+
         <div>
           <Button
             type="submit"
@@ -355,7 +402,7 @@ const PropertiesForm = ({
             disabled={form.formState.isSubmitting}
             className="button col-span-2 w-full"
           >
-            {form.formState.isSubmitting ? 'Submitting...' : `${type} Product `}
+            {form.formState.isSubmitting ? 'Submitting...' : `${type} Property`}
           </Button>
         </div>
       </form>
