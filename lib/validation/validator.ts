@@ -116,8 +116,6 @@ export const PropertyUpdateSchema = PropertyInputSchema.extend({
   _id: z.string().min(1, 'Property ID is required'),
 })
 
-// export const PropertyUpdateSchema = PropertyInputSchema.partial()
-
 export const SettingInputSchema = z.object({
   // PROMPT: create fields
   // codeium, based on the mongoose schema for settings

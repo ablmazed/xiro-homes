@@ -509,6 +509,7 @@ const data: Data = {
   footerMenu,
   homeCard,
   property,
+  settings: [],
 }
 
 export default data
