@@ -23,7 +23,6 @@ export default async function UserButton() {
           <div className="flex items-center">
             <div className="flex flex-col text-xs text-left">
               <span>Hello, {session ? session.user.name : 'sign in'}</span>
-              <span className="font-bold">Account & Orders</span>
             </div>
             <ChevronDown />
           </div>
@@ -43,9 +42,6 @@ export default async function UserButton() {
             <DropdownMenuGroup>
               <Link className="w-full" href="/account">
                 <DropdownMenuItem>Your account</DropdownMenuItem>
-              </Link>
-              <Link className="w-full" href="/account/orders">
-                <DropdownMenuItem>Your orders</DropdownMenuItem>
               </Link>
 
               {session.user.role === 'Admin' && (

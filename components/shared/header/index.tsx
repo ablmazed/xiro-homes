@@ -15,13 +15,15 @@ export default function Header() {
           <div className="">
             <Menu />
           </div>
-          <div>
-            <UserButton />
-          </div>
-          <div>
-            <button>
-              <MoonIcon />
-            </button>
+          <div className="flex justify-between">
+            <div className="my-2 mx-5">
+              <button>
+                <MoonIcon />
+              </button>
+            </div>
+            <div>
+              <UserButton />
+            </div>
           </div>
         </div>
       </div>
