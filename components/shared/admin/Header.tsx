@@ -24,10 +24,7 @@ export default function Header() {
             <div>
               <Bell strokeWidth={3} />
             </div>
-            <div className="flex justify-end">
-              {/* {searchInput} */}
-              Search In put
-            </div>
+            <div className="flex justify-end">{/* {searchInput} */}</div>
           </div>
           <div className="flex gap-2 items-center ">
             <div className="md:flex flex-col items-end hidden "></div>
