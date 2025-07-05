@@ -24,7 +24,6 @@ export type Data = {
   users: IUserInput[]
   settings: ISettingInput[]
   property: IPropertyInput[]
-
   headerMenu: IHeaderMenu[]
   footerMenu: IFooterMenu[]
   homeCard: IHomeCard[]

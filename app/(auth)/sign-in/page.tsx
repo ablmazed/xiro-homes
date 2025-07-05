@@ -15,14 +15,14 @@ export const metadata: Metadata = {
   title: 'Sign In',
 }
 
-export default async function SignIn(props: {
+type Props = {
   searchParams: Promise<{
     callbackUrl: string
   }>
-}) {
-  const searchParams = await props.searchParams
+}
 
-  const { callbackUrl = '/' } = searchParams
+export default async function SignIn({ searchParams }: Props) {
+  const { callbackUrl = '/' } = await searchParams
 
   const session = await auth()
   if (session) {

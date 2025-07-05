@@ -1,13 +1,31 @@
 'use server'
 import { signIn, signOut } from '@/auth'
-import { IUserSignIn } from '@/types'
+import { redirect } from 'next/navigation'
 import bcrypt from 'bcryptjs'
-import { IUserSignUp } from '@/types'
+import { IUserSignIn, IUserSignUp } from '@/types'
 import { UserSignUpSchema } from '../validation/validator'
 import { formatError } from '../utils'
 import { connectToDatabase } from '../mongodb'
-import { redirect } from 'next/navigation'
 import User, { IUser } from '@/lib/models/User.model'
+//SIGNIN- SIGNOUT
+export async function signInWithCredentials(user: IUserSignIn) {
+  return await signIn('credentials', { ...user, redirect: false })
+  // const result = await signIn('credentials', {
+  //   email: user.email,
+  //   password: user.password,
+  //   redirect: false,
+  // })
+  // console.log('signIn result', result)
+}
+
+export const SignInWithGoogle = async () => {
+  await signIn('google')
+}
+
+export const SignOut = async () => {
+  const redirectTo = await signOut({ redirect: false })
+  redirect(redirectTo.redirect)
+}
 
 // GET ONE PROPERTY BY ID
 
@@ -39,18 +57,4 @@ export async function registerUser(userSignUp: IUserSignUp) {
   } catch (error) {
     return { success: false, error: formatError(error) }
   }
-}
-
-export async function signInWithCredentials(user: IUserSignIn) {
-  return await signIn('credentials', { ...user, redirect: false })
-}
-export const SignOut = async () => {
-  const redirectTo = await signOut({ redirect: false })
-  redirect(redirectTo.redirect)
-}
-
-//SIGNIN-WITH-GOOGLE
-
-export const SignInWithGoogle = async () => {
-  await signIn('google')
 }

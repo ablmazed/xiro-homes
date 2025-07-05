@@ -1,12 +1,13 @@
 import { MongoDBAdapter } from '@auth/mongodb-adapter'
 import bcrypt from 'bcryptjs'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { connectToDatabase } from '@/lib/mongodb'
+
 import client from './lib/db/client'
 import User from '@/lib/models/User.model'
 
 import NextAuth, { type DefaultSession } from 'next-auth'
 import authConfig from './auth.config'
+import { connectToDatabase } from './lib/mongodb'
 
 declare module 'next-auth' {
   interface Session {
@@ -36,6 +37,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         },
         password: { type: 'password' },
       },
+
       async authorize(credentials) {
         await connectToDatabase()
         if (credentials == null) return null
