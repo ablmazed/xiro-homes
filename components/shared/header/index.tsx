@@ -14,6 +14,8 @@ export default function Header() {
           </div>
           <div className="">
             <Menu />
+          </div>
+          <div>
             <UserButton />
           </div>
           <div>
