@@ -14,11 +14,11 @@ export default function Header() {
           </div>
           <div className="">
             <Menu />
+            <UserButton />
           </div>
           <div>
             <button>
               <MoonIcon />
-              <UserButton />
             </button>
           </div>
         </div>
